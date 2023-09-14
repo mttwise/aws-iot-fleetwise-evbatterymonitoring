@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: aws-iot-fleetwise-evbatterymonitoring
+  annotations:
+    github.com/project-slug: jamesenki/aws-iot-fleetwise-evbatterymonitoring
+spec:
+  type: other
+  lifecycle: unknown
+  owner: everyone
