@@ -1,0 +1,25 @@
+# https://docs.aws.amazon.com/proton/latest/userguide/ag-infrastructure-tmp-files-codebuild.html
+
+infrastructure:
+  templates:
+    - rendering_engine: codebuild
+      settings:
+        image: aws/codebuild/amazonlinux2-x86_64-standard:5.0
+        runtimes:
+          nodejs: 18
+        provision:
+          # Run when create/update is triggered for environment or service
+          # Install dependencies
+          
+          - aws cloudformation create-stack --stack-name test-service --template-body file://template.yaml --capabilities CAPABILITY_NAMED_IAM
+          - aws cloudformation wait stack-create-complete --stack-name test-service
+          - export WEB_BUCKET=`aws cloudformation describe-stacks --stack-name test-service --query "Stacks[0].Outputs[?OutputKey=='S3BucketName'].OutputValue" --output text`
+          - aws s3 sync web/ s3://${WEB_BUCKET}/
+
+          
+          # Notify AWS Proton of deployment status
+          - aws proton notify-resource-deployment-status-change --resource-arn $RESOURCE_ARN
+          # add the following to the above command if there are outputs: --outputs file://./outputs.json
+        deprovision:
+          # Install dependencies and destroy resources
+          - echo deprovisioning

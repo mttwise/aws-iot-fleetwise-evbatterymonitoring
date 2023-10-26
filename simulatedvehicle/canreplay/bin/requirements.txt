@@ -1,3 +1,0 @@
-cantools
-pandas
-can-isotp
