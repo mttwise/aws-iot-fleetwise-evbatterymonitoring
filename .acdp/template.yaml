@@ -67,7 +67,7 @@ spec:
         serviceSpecPath: ${{ steps.createProtonSpec.output.filename }}
         # Update the following fields to match the resources in your AWS account
         region: ${{ parameters.aws_region }}
-        templateName: test_service
+        templateName: test-service
         templateMajorVersion: '1'
 
     - id: s3CatalogWrite
