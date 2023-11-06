@@ -5,3 +5,4 @@ This repository contains resources for theblog post "Building an EV Battery Moni
 - [AWS CloudFormation template for Electric Vehicle simulation](simulatedvehicle/ec2simulation/template.yaml) and [Troubleshooting guidelines](troubleshooting.md)
 - [Examples of AWS CLI inputs to configure AWS IoT FLeetWise solution](cloud/cli-input-templates)
 - [Sample Grafana dashboards to visualise vehicle data stored in Amazon Timestream](dashboards)
+cmd

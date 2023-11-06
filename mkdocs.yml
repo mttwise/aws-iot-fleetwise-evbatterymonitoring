@@ -1,0 +1,8 @@
+site_name: CMS Tech Docs
+site_url: https://acdp.demo.awsconnectedmobilitysolutions.com/docs?filters%5Buser%5D=all
+nav: 
+  - Home: index.md
+  - Conencted Mobility Solution: CMS_README.md
+  - EV Battery Use Case: EV_Battery.md
+theme: readthedocs
+

@@ -1,0 +1,23 @@
+Capabilities,ID,Functionality
+Simulator,CMS.1,simulator
+Acquire data,CMS.2,
+Store Data,CMS.3,
+Connect Vehicle,CMS.4,
+OnBoard Vehicle,CMS.5,Provisioning & certificate management
+"Select, Configure, Deploy",CMS.6,
+Aggregate Data,CMS.7,
+Transform Data,CMS.8,
+Track Location,CMS.9,
+Send alerts,CMS.10,
+Predict EV Battery Health,CMS.11,
+Expose Data: APIs,CMS.12,
+Remote Operations,CMS.13,
+Detect Anomaly,CMS.14,
+Predictive Maintenance,CMS.15,
+Personalize Vehicle,CMS.16,
+Integrate with Call Centers,CMS.17,
+Schedule Service & Order Parts,CMS.18,
+Visualize,CMS.19,
+Demo UI,CMS.20,
+Database,CMS.21
+User Authentication,CMS.22
