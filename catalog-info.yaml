@@ -9,6 +9,8 @@ spec:
   type: service
   lifecycle: unknown
   owner: aws
+  providesApis:
+    - connected-vehicle-api
 ---
 apiVersion: backstage.io/v1alpha1
 kind: API
