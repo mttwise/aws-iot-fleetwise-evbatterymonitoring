@@ -23,4 +23,4 @@ spec:
   owner: aws
   system: evbatterymonitoring
   definition:
-    $text: https://github.com/jamesenki/aws-iot-fleetwise-evbatterymonitoring/blob/mkdocs/api.yml
+    $text: ./api.yml
