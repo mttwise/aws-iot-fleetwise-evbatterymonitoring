@@ -1,0 +1,122 @@
+openapi: 3.0.0
+info:
+  title: Connected Vehicle APIs
+  description: API interface for interacting with connected vehicles.
+  version: "1.0.0"
+
+servers:
+  - url: 'https://api.connectedvehicles.com'
+
+paths:
+  /vehicles/{vehicleId}/telemetry:
+    get:
+      summary: Get telemetry data
+      operationId: getTelemetry
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          description: Unique identifier of the vehicle
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Telemetry data retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelemetryData'
+
+  /vehicles/{vehicleId}/insights:
+    get:
+      summary: Get insights from S3 bucket
+      operationId: getInsights
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          description: Unique identifier of the vehicle
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Insights data retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsightsData'
+
+  /vehicles/{vehicleId}/commands:
+    post:
+      summary: Execute remote commands on the vehicle
+      operationId: executeCommand
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          description: Unique identifier of the vehicle
+          schema:
+            type: string
+      requestBody:
+        description: Command to be executed
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleCommand'
+      responses:
+        '200':
+          description: Command executed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommandResponse'
+
+components:
+  schemas:
+    TelemetryData:
+      type: object
+      properties:
+        location:
+          type: object
+          properties:
+            latitude:
+              type: number
+              format: double
+            longitude:
+              type: number
+              format: double
+        speed:
+          type: number
+          format: double
+        engineStatus:
+          type: string
+
+    InsightsData:
+      type: object
+      properties:
+        fuelEfficiency:
+          type: number
+          format: double
+        tirePressure:
+          type: array
+          items:
+            type: number
+
+    VehicleCommand:
+      type: object
+      properties:
+        commandType:
+          type: string
+          enum: [lock, unlock, startEngine, stopEngine]
+        parameters:
+          type: object
+
+    CommandResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [success, failure]
+        message:
+          type: string
