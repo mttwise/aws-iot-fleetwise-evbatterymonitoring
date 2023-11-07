@@ -8,3 +8,19 @@ spec:
   type: service
   lifecycle: unknown
   owner: aws
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  title: Connected Vehicle API
+  name: connected-vehicle-api
+  description: API For Connected Vehicle
+  tags:
+    - unstable
+spec:
+  type: openapi
+  lifecycle: production
+  owner: aws
+  system: evbatterymonitoring
+  definition:
+    $text: https://github.com/jamesenki/aws-iot-fleetwise-evbatterymonitoring/blob/mkdocs/api.yml
