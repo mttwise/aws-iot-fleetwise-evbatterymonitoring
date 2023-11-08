@@ -4,7 +4,26 @@ metadata:
   name: aws-iot-fleetwise-evbatterymonitoring
   annotations:
     github.com/project-slug: jamesenki/aws-iot-fleetwise-evbatterymonitoring
+    backstage.io/techdocs-ref: dir:.
 spec:
   type: service
   lifecycle: unknown
   owner: aws
+  providesApis:
+    - connected-vehicle-api
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  title: Connected Vehicle API
+  name: connected-vehicle-api
+  description: API For Connected Vehicle
+  tags:
+    - unstable
+spec:
+  type: openapi
+  lifecycle: production
+  owner: aws
+  system: evbatterymonitoring
+  definition:
+    $text: ./api.yml
