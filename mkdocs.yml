@@ -1,18 +1,5 @@
 nav:
   CMS_README: /Users/jamsimox/Work/Repos/aws-iot-fleetwise-evbatterymonitoring/docs/CMS_README.md
-  EV_Battery: /Users/jamsimox/Work/Repos/aws-iot-fleetwise-evbatterymonitoring/docs/EV_Battery.md
-  about: /Users/jamsimox/Work/Repos/aws-iot-fleetwise-evbatterymonitoring/docs/about.md
-  architecture/decisions/0001-record-architecture-decisions: /Users/jamsimox/Work/Repos/aws-iot-fleetwise-evbatterymonitoring/docs/architecture/decisions/0001-record-architecture-decisions.md
-  architecture/decisions/0002-backstage-as-the-deployment-platform: /Users/jamsimox/Work/Repos/aws-iot-fleetwise-evbatterymonitoring/docs/architecture/decisions/0002-backstage-as-the-deployment-platform.md
-  architecture/decisions/0003-cms-naming-conventions: /Users/jamsimox/Work/Repos/aws-iot-fleetwise-evbatterymonitoring/docs/architecture/decisions/0003-cms-naming-conventions.md
-  architecture/decisions/0004-usage-of-smart-battery-manager-for-cms: /Users/jamsimox/Work/Repos/aws-iot-fleetwise-evbatterymonitoring/docs/architecture/decisions/0004-usage-of-smart-battery-manager-for-cms.md
-  architecture/decisions/0005-hyperloop-usage-in-cms: /Users/jamsimox/Work/Repos/aws-iot-fleetwise-evbatterymonitoring/docs/architecture/decisions/0005-hyperloop-usage-in-cms.md
-  architecture/decisions/0006-iot-topic-naming-conventions: /Users/jamsimox/Work/Repos/aws-iot-fleetwise-evbatterymonitoring/docs/architecture/decisions/0006-iot-topic-naming-conventions.md
-  architecture/decisions/0007-cdk-parameterization-pattern: /Users/jamsimox/Work/Repos/aws-iot-fleetwise-evbatterymonitoring/docs/architecture/decisions/0007-cdk-parameterization-pattern.md
-  architecture/decisions/0008-cms-identity-provider-options-and-authentication-flow: /Users/jamsimox/Work/Repos/aws-iot-fleetwise-evbatterymonitoring/docs/architecture/decisions/0008-cms-identity-provider-options-and-authentication-flow.md
-  architecture/decisions/0009-cms-user-and-vehicle-authorization: /Users/jamsimox/Work/Repos/aws-iot-fleetwise-evbatterymonitoring/docs/architecture/decisions/0009-cms-user-and-vehicle-authorization.md
-  architecture/decisions/0010-ev-battery-dashboard-solution: /Users/jamsimox/Work/Repos/aws-iot-fleetwise-evbatterymonitoring/docs/architecture/decisions/0010-ev-battery-dashboard-solution.md
-  architecture/decisions/0011-ssm-parameter-naming-convention-for-inter-module-dependencies: /Users/jamsimox/Work/Repos/aws-iot-fleetwise-evbatterymonitoring/docs/architecture/decisions/0011-ssm-parameter-naming-convention-for-inter-module-dependencies.md
   index: /Users/jamsimox/Work/Repos/aws-iot-fleetwise-evbatterymonitoring/docs/index.md
 site_name: CMS Technical Docs
 theme: readthedocs
