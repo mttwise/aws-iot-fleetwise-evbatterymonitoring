@@ -1,5 +1,5 @@
 nav:
-  CMS_README: /Users/jamsimox/Work/Repos/aws-iot-fleetwise-evbatterymonitoring/docs/CMS_README.md
-  index: /Users/jamsimox/Work/Repos/aws-iot-fleetwise-evbatterymonitoring/docs/index.md
+  - CMS_README: /Users/jamsimox/Work/Repos/aws-iot-fleetwise-evbatterymonitoring/docs/CMS_README.md
+  - index: /Users/jamsimox/Work/Repos/aws-iot-fleetwise-evbatterymonitoring/docs/index.md
 site_name: CMS Technical Docs
 theme: readthedocs
