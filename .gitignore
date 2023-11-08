@@ -256,4 +256,4 @@ simulatedvehicle/canreplay/config/ev_overcurrent_detection/README.md
 certs/*
 certs/**
 *.pem
-*.key
+*.keysite/
