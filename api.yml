@@ -87,7 +87,7 @@ components:
       enum:
         - Celsius
         - Fahrenheit
- RemoteDoorRequest:
+    RemoteDoorRequest:
       type: object
       properties:
         command:
