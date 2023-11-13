@@ -24,6 +24,6 @@ spec:
   type: openapi
   lifecycle: production
   owner: aws
-  system: evbatterymonitoring
+  system: connected-vehicle
   definition:
     $text: ./api.yml
