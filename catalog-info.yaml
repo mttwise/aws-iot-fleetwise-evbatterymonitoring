@@ -19,7 +19,7 @@ metadata:
   name: connected-vehicle-api
   description: API For Connected Vehicle
   tags:
-    - demo
+    - unstable
 spec:
   type: openapi
   lifecycle: production
