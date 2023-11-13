@@ -1,17 +1,7 @@
-# Welcome to MkDocs
+# Welcome to Connected Mobility Solution on AWS
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+For full documentation visit our [Implementation Guide](https://docs.aws.amazon.com/solutions/latest/connected-mobility-solution-on-aws/solution-overview.html)
 
-## Commands
+## Deployable Components
+This document shows the documentation for the main body of Connected Mobility Solution including deploying this developer portal and the core components distributed in the [CMS Github Repository](https://github.com/aws-solutions/connected-mobility-solution-on-aws)
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
-
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
