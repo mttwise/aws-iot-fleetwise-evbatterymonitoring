@@ -6,7 +6,7 @@ metadata:
     github.com/project-slug: jamesenki/aws-iot-fleetwise-evbatterymonitoring
     backstage.io/techdocs-ref: dir:.
 spec:
-  type: component
+  type: service
   lifecycle: stage
   owner: aws
   providesApis:
