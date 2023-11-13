@@ -1,7 +1,7 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: cms-apis-docs
+  name: cms-documentation
   annotations:
     github.com/project-slug: jamesenki/aws-iot-fleetwise-evbatterymonitoring
     backstage.io/techdocs-ref: dir:.
@@ -24,6 +24,6 @@ spec:
   type: openapi
   lifecycle: production
   owner: aws
-  system: connected-vehicle
+  system: evbatterymonitoring
   definition:
     $text: ./api.yml
