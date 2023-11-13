@@ -197,9 +197,71 @@ paths:
       responses:
         '200':
           description: Remote window control command sent successfully
+/vehicles/{vehicleId}/stolenVehicleMode:
+    post:
+      summary: Initiate or deactivate stolen vehicle mode
+      operationId: changeStolenVehicleMode
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          description: Unique identifier of the vehicle
+          schema:
+            type: string
+      requestBody:
+        description: Stolen vehicle mode change request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StolenModeChangeRequest'
+      responses:
+        '200':
+          description: Stolen vehicle mode change processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StolenModeChangeResponse'
+
 components:
   schemas:
-    # Existing schema definitions from the first specification
+    InitiateStolenVehicleMode:
+      type: object
+      properties:
+        isStolenModeActive:
+          type: boolean
+    Location:
+      type: object
+      properties:
+        positionLatitude:
+          type: number
+          format: double
+        positionLongitude:
+          type: number
+          format: double
+        estimatedPositionError:
+          type: integer
+          format: int32
+        positionAltitude:
+          type: number
+          format: double
+        gpsFixTypeEnum:
+          $ref: '#/components/schemas/Location.GpsFixType'
+        isGPSFixNotAvailable:
+          type: boolean
+        estimatedAltitudeError:
+          type: integer
+          format: int32
+        positionDirection:
+          type: number
+          format: double
+    Location.GpsFixType:
+      type: string
+      enum:
+        - ID_FIX_NO_POS
+        - ID_FIX_3D
+        - ID_FIX_2D
+        - ID_FIX_ESTIMATED
     TelemetryData:
       type: object
       properties:
@@ -382,3 +444,178 @@ components:
         - OPEN
         - PARTIAL
         - CLOSE
+StolenModeChangeRequest:
+      type: object
+      properties:
+        stolenModeCommand:
+          $ref: '#/components/schemas/StolenModeChangeRequest.StolenModeCommand'
+        stolenModeDuration:
+          type: integer
+          format: int32
+        locationUpdateInterval:
+          type: integer
+          format: int32
+    StolenModeChangeRequest.StolenModeCommand:
+      type: string
+      enum:
+        - ENTER
+        - EXIT
+    StolenModeChangeResponse:
+      type: object
+      properties:
+        isStolenModeActive:
+          type: boolean
+    StolenVehicleInfoNotification:
+      type: object
+      properties:
+        vehicleInfo:
+          $ref: '#/components/schemas/VehicleInfo'
+        isStolenModeActive:
+          type: boolean
+    TirePressure:
+      type: object
+      properties:
+        flTirePressure:
+          type: number
+          format: float
+        flTireSts:
+          $ref: '#/components/schemas/TirePressure.TireStatusEnum'
+        frTirePressure:
+          type: number
+          format: float
+        frTireSts:
+          $ref: '#/components/schemas/TirePressure.TireStatusEnum'
+        rlTirePressure:
+          type: number
+          format: float
+        rlTireSts:
+          $ref: '#/components/schemas/TirePressure.TireStatusEnum'
+        rrTirePressure:
+          type: number
+          format: float
+        rrTireSts:
+          $ref: '#/components/schemas/TirePressure.TireStatusEnum'
+        rl2TirePressure:
+          type: number
+          format: float
+        rr2TirePressure:
+          type: number
+          format: float
+    TirePressure.TireStatusEnum:
+      type: string
+      enum:
+        - NORMAL
+        - LOW
+        - HIGH
+        - SNA
+        - SIGNIFICANTLY_LOW
+    VehicleInfo:
+      type: object
+      properties:
+        vehicleLocation:
+          $ref: '#/components/schemas/Location'
+        vehicleSpeed:
+          type: number
+          format: float
+        odometer:
+          type: integer
+          format: int32
+        engineStatusEnum:
+          $ref: '#/components/schemas/VehicleInfo.EngineStatusEnum'
+        language:
+          type: string
+        country:
+          type: string
+        vehicleType:
+          $ref: '#/components/schemas/VehicleInfo.VehicleTypeEnum'
+        vin:
+          type: string
+        brand:
+          type: string
+        model:
+          type: string
+        year:
+          type: string
+        recentVehicleLocation1:
+          $ref: '#/components/schemas/Location'
+        recentVehicleLocation2:
+          $ref: '#/components/schemas/Location'
+    VehicleInfo.EngineStatusEnum:
+      type: string
+      enum:
+        - STOP
+        - CRANK
+        - IDLE
+        - RUN
+        - STALL
+        - REQUESTSTART
+    VehicleInfo.VehicleTypeEnum:
+      type: string
+      enum:
+        - PASSENGER_CLASSM1
+        - BUSESANDCOACHES_CLASSM2
+        - BUSESANDCOACHES_CLASSM3
+        - LIGHTCOMMERCIAL_CLASSN1
+        - HEAVYDUTY_CLASSN2
+        - HEAVYDUTY_CLASSN3
+        - MOTORCYCLE_CLASSL1E
+        - MOTORCYCLE_CLASSL2E
+        - MOTORCYCLE_CLASSL3E
+        - MOTORCYCLE_CLASSL4E
+        - MOTORCYCLE_CLASSL5E
+        - MOTORCYCLE_CLASSL6E
+        - MOTORCYCLE_CLASSL7E
+    VehicleStatus:
+      type: object
+      properties:
+        vehicleStatusType:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/VehicleStatus.Type'
+        vehicleStatusParameters:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/VehicleStatus.Status'
+        engineStatusEnum:
+          $ref: '#/components/schemas/VehicleStatus.EngineStatusEnum'
+        fuelLevel:
+          type: integer
+          format: int32
+        odometer:
+          type: integer
+          format: int32
+        interiorTemperature:
+          type: integer
+          format: int32
+        vehicleLocationType:
+          $ref: '#/components/schemas/Location'
+    VehicleStatus.EngineStatusEnum:
+      type: string
+      enum:
+        - STOP
+        - CRANK
+        - IDLE
+        - RUN
+        - STALL
+        - REQUESTSTART
+    VehicleStatus.Status:
+      type: string
+      enum:
+        - CLOSED
+        - CLOSED_UNLOCKED
+        - CLOSED_LOCKED
+        - OPENED
+    VehicleStatus.Type:
+      type: string
+      enum:
+        - FLDOOR
+        - FRDOOR
+        - RLDOOR
+        - RRDOOR
+        - FLWINDOW
+        - FRWINDOW
+        - LLWINDOW
+        - LRWINDOW
+        - HOOD
+        - TRUNK
+        - LIFTGATE
