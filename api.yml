@@ -8,390 +8,117 @@ servers:
   - url: 'https://api.connectedvehicles.com'
 
 paths:
-components:
-  schemas:
-      RemoteClimateRequest:
-        type: object
-        properties:
-          command:
-            $ref: '#/components/schemas/RemoteClimateRequest.CommandEnum'
-          interiorTemperature:
-            description: int32 duration = 2; // Duration
-            type: integer
-            format: int32
-          fanSpeed:
-            type: integer
-            format: int32
-          termperatureUOM:
-            $ref: '#/components/schemas/RemoteClimateRequest.TemperatureEnum'
-          targetTemp:
-            type: integer
-            format: int32
-          timeoutAfterTemp:
-            type: integer
-            format: int32
-          preTripTimeout:
-            type: integer
-            format: int32
-      RemoteClimateRequest.CommandEnum:
-        type: string
-        enum:
-          - "ON"
-          - "OFF"
-      RemoteClimateRequest.TemperatureEnum:
-        type: string
-        enum:
-          - Celsius
-          - Fahrenheit
-      RemoteDoorRequest:
-        type: object
-        properties:
-          command:
-            $ref: '#/components/schemas/RemoteDoorRequest.CommandEnum'
-      RemoteDoorRequest.CommandEnum:
-        type: string
-        enum:
-          - LOCK_ALL_DOORS
-          - UNLOCK_DRIVER_DOOR
-          - UNLOCK_ALL_DOORS
-          - OPEN_LIFTGATE
-          - OPEN_HOOD
-          - UNLOCK_TRUNK
-          - CLOSE_LIFTGATE
-      RemoteEngineRequest:
-        type: object
-        properties:
-          command:
-            $ref: '#/components/schemas/RemoteEngineRequest.CommandEnum'
-          duration:
-            type: integer
-            format: int32
-      RemoteEngineRequest.CommandEnum:
-        type: string
-        enum:
-          - START
-          - STOP
-      RemoteHornAndLightsRequest:
-        description: |-
-          message CancelRequest {
-          	 bytes serviceRequestId = 1;
-          }
-          This message represents  RemoteHornAndLights Operation of the vehicle .
-          * <div class=exmsg-main>
-          * <h4>RemoteHornAndLightsRequest Example Message:</h4>
-          * <div class=ex-msg>
-          *	<code>
-          * 		timestamp: 1489632211020
-          * 		messageId: 1
-          * 		messages
-          * 		{
-          * 		 [com.fca.uconnect.global.remoteOperationRequest]
-          * 		 {
-          * 		  action: SUBSCRIBE
-          * 		  remoteDoorRequest
-          * 		  {
-          * 			command: UNLOCK_DRIVER
-          * 			duration: 0
-          * 		  }
-          * 		 }
-          * 		}
-          *	</code>
-          *   </div>
-          * </div>
-        type: object
-        properties:
-          command:
-            $ref: '#/components/schemas/RemoteHornAndLightsRequest.CommandEnum'
-          duration:
-            type: integer
-            format: int32
-      RemoteHornAndLightsRequest.CommandEnum:
-        type: string
-        enum:
-          - HORN_AND_LIGHTS
-      RemoteOperationRequest:
-        description: |-
-          import public "Global_Uconnect_Control.proto";
-          import public "Global_Uconnect_VehicleInfo.proto";
-  
-          * This message represents  RemoteOperationRequest of vehicle for Remote Operations.
-          * <div class=exmsg-main>
-          * <h4>RemoteOperationRequest Example Message:</h4>
-          * <div class=ex-msg>
-          *	<code>
-          * 		timestamp: 1489632211020
-          * 		messageId: 1
-          * 		messages
-          * 		{
-          * 		 [com.fca.uconnect.global.remoteOperationRequest]
-          * 		 {
-          * 		  action: SUBSCRIBE
-          * 		  serviceRequestId:"-\0274\302]\325\324 \354K"
-          * 		  remoteDoorRequest
-          * 		  {
-          * 			command: UNLOCK_DRIVER
-          *
-          * 		  }
-          * 		 }
-          * 		}
-          *	</code>
-          *   </div>
-          * </div>
-        type: object
-        properties:
-          action:
-            $ref: '#/components/schemas/RemoteOperationRequest.ActionEnum'
-          serviceRequestId:
-            type: string
-            format: binary
-        oneOf:
-          - not:
-              anyOf:
-                - required:
-                    - remoteHornAndLightsRequest
-                  properties:
-                    remoteHornAndLightsRequest:
-                      $ref: '#/components/schemas/RemoteHornAndLightsRequest'
-                - required:
-                    - remoteEngineRequest
-                  properties:
-                    remoteEngineRequest:
-                      $ref: '#/components/schemas/RemoteEngineRequest'
-                - required:
-                    - remoteDoorRequest
-                  properties:
-                    remoteDoorRequest:
-                      $ref: '#/components/schemas/RemoteDoorRequest'
-                - required:
-                    - remoteClimateRequest
-                  properties:
-                    remoteClimateRequest:
-                      $ref: '#/components/schemas/RemoteClimateRequest'
-                - required:
-                    - remoteWindowRequest
-                  properties:
-                    remoteWindowRequest:
-                      $ref: '#/components/schemas/RemoteWindowRequest'
-          - required:
-              - remoteHornAndLightsRequest
-            properties:
-              remoteHornAndLightsRequest:
-                $ref: '#/components/schemas/RemoteHornAndLightsRequest'
-          - required:
-              - remoteEngineRequest
-            properties:
-              remoteEngineRequest:
-                $ref: '#/components/schemas/RemoteEngineRequest'
-          - required:
-              - remoteDoorRequest
-            properties:
-              remoteDoorRequest:
-                $ref: '#/components/schemas/RemoteDoorRequest'
-          - required:
-              - remoteClimateRequest
-            properties:
-              remoteClimateRequest:
-                $ref: '#/components/schemas/RemoteClimateRequest'
-          - required:
-              - remoteWindowRequest
-            properties:
-              remoteWindowRequest:
-                $ref: '#/components/schemas/RemoteWindowRequest'
-      RemoteOperationRequest.ActionEnum:
-        type: string
-        enum:
-          - NO_ACTION
-          - SUBSCRIBE
-      RemoteOperationResponse:
-        description: |-
-          This message represents  Response to Remote Operation of the vehicle .
-          * <div class=exmsg-main>
-          * <h4>RemoteOperationResponse Example Message:</h4>
-          * <div class=ex-msg>
-          *	<code>
-          * 		timestamp: 1489633266061
-          *		messageId: 1
-          *		correlationId: 1
-          *		messages
-          * 		{
-          *		 [com.fca.uconnect.global.remoteOperationResponse]
-          * 		 {
-          * 		  response: SUCCESS
-          * 		  serviceRequestId: "-\0274\302]\325\324 \354K"
-          * 		 }
-          * 		}
-          * </code></div></div>
-        type: object
-        properties:
-          response:
-            $ref: '#/components/schemas/RemoteOperationResponse.ResponseEnum'
-          serviceRequestId:
-            type: string
-            format: binary
-          isTransient:
-            type: boolean
-          failureReasonCode:
-            type: integer
-            format: int32
-      RemoteOperationResponse.ResponseEnum:
-        type: string
-        enum:
-          - SUCCESS
-          - SUCCESS_CONTINUE
-          - SUCCESS_NOCONTINUE
-          - NOT_AUTHORIZED
-          - FAILED
-          - FAILED_IGNITION_ON
-          - FAILED_NOCANACK
-          - FAILED_VEHCONDITION
-          - STARTFAILED_DOORS_NOTLOCKED
-          - STARTFAILED_DOORS_OPEN
-          - STARTFAILED_HOODTRUNK_OPEN
-          - STARTFAILED_ALARM_ACTIVE
-          - STARTFAILED_FUELLOW
-          - STARTFAILED_GASPEDAL
-          - STARTFAILED_PRNDL
-          - STARTFAILED_WINDOWSUNOPEN
-          - STARTFAILED_MAXATTEMPTS_MET
-          - STARTFAILED_VEHPOWERMODE
-          - STARTFAILED_BATTERYLOW
-          - STOPFAILED_ENG_ALREADYOFF
-          - DOORS_FAILED_DOOR_OPEN
-          - FLASHLIGHTS_FAILED_IGNITIONON
-          - FLASHLIGHTS_FAILED_DOOROPEN
-          - FLASHLIGHTS_FAILED_EXPIRED
-          - DOORUNLOCK_RELOCKED_FAILED
-          - DOORUNLOCK_RELOCKED
-          - NOTIFY_CONTINUE
-          - NOTIFY_NOCONTINUE
-          - FAILED_ACTIVE_THEFT_ALARM
-          - NOT_FOUND
-          - REQUESTED
-          - DELIVERED
-          - IN_PROGRESS
-          - COMPLETE
-          - COMPLETE_TIMEOUT
-          - SPEEDLOCKOUT
-      RemoteWindowRequest:
-        type: object
-        properties:
-          command:
-            $ref: '#/components/schemas/RemoteWindowRequest.CommandEnum'
-      RemoteWindowRequest.CommandEnum:
-        type: string
-        enum:
-          - OPEN
-          - PARTIAL
-          - CLOSE
-    /vehicles/{vehicleId}/telemetry:
-      get:
-        summary: Get telemetry data
-        operationId: getTelemetry
-        parameters:
-          - name: vehicleId
-            in: path
-            required: true
-            description: Unique identifier of the vehicle
-            schema:
-              type: string
-        responses:
-          '200':
-            description: Telemetry data retrieved successfully
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/TelemetryData'
-  
-    /vehicles/{vehicleId}/insights:
-      get:
-        summary: Get insights from S3 bucket
-        operationId: getInsights
-        parameters:
-          - name: vehicleId
-            in: path
-            required: true
-            description: Unique identifier of the vehicle
-            schema:
-              type: string
-        responses:
-          '200':
-            description: Insights data retrieved successfully
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/InsightsData'
-  
-    /vehicles/{vehicleId}/commands:
-      post:
-        summary: Execute remote commands on the vehicle
-        operationId: executeCommand
-        parameters:
-          - name: vehicleId
-            in: path
-            required: true
-            description: Unique identifier of the vehicle
-            schema:
-              type: string
-        requestBody:
-          description: Command to be executed
+  /vehicles/{vehicleId}/telemetry:
+    get:
+      summary: Get telemetry data
+      operationId: getTelemetry
+      parameters:
+        - name: vehicleId
+          in: path
           required: true
+          description: Unique identifier of the vehicle
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Telemetry data retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VehicleCommand'
-        responses:
-          '200':
-            description: Command executed successfully
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/CommandResponse'
+                $ref: '#/components/schemas/TelemetryData'
   
-  components:
-    schemas:
-      TelemetryData:
-        type: object
-        properties:
-          location:
-            type: object
-            properties:
-              latitude:
-                type: number
-                format: double
-              longitude:
-                type: number
-                format: double
-          speed:
-            type: number
-            format: double
-          engineStatus:
+  /vehicles/{vehicleId}/insights:
+    get:
+      summary: Get insights from S3 bucket
+      operationId: getInsights
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          description: Unique identifier of the vehicle
+          schema:
             type: string
-  
-      InsightsData:
-        type: object
-        properties:
-          fuelEfficiency:
-            type: number
-            format: double
-          tirePressure:
-            type: array
-            items:
+      responses:
+        '200':
+          description: Insights data retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsightsData'
+    
+  /vehicles/{vehicleId}/commands:
+    post:
+      summary: Execute remote commands on the vehicle
+      operationId: executeCommand
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          description: Unique identifier of the vehicle
+          schema:
+            type: string
+      requestBody:
+        description: Command to be executed
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleCommand'
+      responses:
+        '200':
+          description: Command executed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommandResponse'
+
+components:
+  schemas:
+    TelemetryData:
+      type: object
+      properties:
+        location:
+          type: object
+          properties:
+            latitude:
               type: number
-  
-      VehicleCommand:
-        type: object
-        properties:
-          commandType:
-            type: string
-            enum: [lock, unlock, startEngine, stopEngine]
-          parameters:
-            type: object
-  
-      CommandResponse:
-        type: object
-        properties:
-          status:
-            type: string
-            enum: [success, failure]
-          message:
-            type: string
+              format: double
+            longitude:
+              type: number
+              format: double
+        speed:
+          type: number
+          format: double
+        engineStatus:
+          type: string
+    
+    InsightsData:
+      type: object
+      properties:
+        fuelEfficiency:
+          type: number
+          format: double
+        tirePressure:
+          type: array
+          items:
+            type: number
+
+    VehicleCommand:
+      type: object
+      properties:
+        commandType:
+          type: string
+          enum: [lock, unlock, startEngine, stopEngine]
+        parameters:
+          type: object
+
+    CommandResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [success, failure]
+        message:
+          type: string
+
+
