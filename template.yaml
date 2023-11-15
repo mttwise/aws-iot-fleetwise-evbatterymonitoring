@@ -88,13 +88,20 @@ spec:
             definition: 
               $text: ./api.yaml
 
-    - id: register
-      name: Register
+    - id: registerService
+      name: "Register: Service Catalog Item"
       action: catalog:register
       input:
-        catalogInfoUrl: ${{ steps.s3CatalogWrite.output.s3Url }}
+        catalogInfoUrl: ${{ steps.serviceS3CatalogWrite.output.s3Url }}
+    - id: registerApi
+      name: "Register: API Catalog Item"
+      action: catalog:register
+      input:
+        catalogInfoUrl: ${{ steps.apiS3CatalogWrite.output.s3Url }}
+
   output:
     links:
       - title: Open in catalog
         icon: catalog
         entityRef: ${{ steps.register.output.entityRef }}
+
