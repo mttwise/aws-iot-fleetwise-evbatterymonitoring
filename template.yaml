@@ -1,0 +1,71 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: sample-service
+  title: Sample Service
+  description: Sample Template that Creates a Catalog Item
+  tags:
+    - sample
+spec:
+  owner: sample
+  type: service
+
+  parameters:
+    - title: Provide the required information
+      required:
+        - component_id
+        - owner
+      properties:
+        component_id:
+          title: Name
+          type: string
+          description: Unique name of the component
+          ui:field: EntityNamePicker
+        description:
+          title: Description
+          type: string
+          description: Help others understand what this component is for.
+        owner:
+          title: Owner
+          type: string
+          description: Owner of the component
+          ui:field: OwnerPicker
+          ui:options:
+            allowedKinds:
+  steps:
+
+    - id: runSetupTask
+      name: Run Setup Task
+      action: debug:wait
+      input:
+        minutes: 0
+        seconds: 4
+        milliseconds: 0
+
+    - id: s3CatalogWrite
+      name: S3 Catalog Write
+      action: aws:s3:catalog:write
+      input:
+        componentId: ${{ parameters.component_id }}
+        entity:
+          apiVersion: backstage.io/v1alpha1
+          kind: Component
+          metadata:
+            name: ${{parameters.component_id}}
+            description: ${{parameters.description}}
+            annotations: {}
+          spec:
+            type: service
+            lifecycle: experimental
+            owner: ${{parameters.owner}}
+
+    - id: register
+      name: Register
+      action: catalog:register
+      input:
+        catalogInfoUrl: ${{ steps.s3CatalogWrite.output.s3Url }}
+  output:
+    links:
+      - title: Open in catalog
+        icon: catalog
+        entityRef: ${{ steps.register.output.entityRef }}
