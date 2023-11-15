@@ -14,12 +14,18 @@ spec:
     - title: Provide the required information
       required:
         - component_id
+        - api_id
         - owner
       properties:
         component_id:
           title: Name
           type: string
           description: Unique name of the component
+          ui:field: EntityNamePicker
+        api_id:
+          title: API Name
+          type: string
+          description: Unique name of the component's API
           ui:field: EntityNamePicker
         description:
           title: Description
@@ -42,8 +48,8 @@ spec:
         seconds: 4
         milliseconds: 0
 
-    - id: s3CatalogWrite
-      name: S3 Catalog Write
+    - id: serviceS3CatalogWrite
+      name: "Service: S3 Catalog Write"
       action: aws:s3:catalog:write
       input:
         componentId: ${{ parameters.component_id }}
@@ -53,11 +59,34 @@ spec:
           metadata:
             name: ${{parameters.component_id}}
             description: ${{parameters.description}}
-            annotations: {}
+            annotations:
+              github.com/project-slug: jamesenki/aws-iot-fleetwise-evbatterymonitoring
+              backstage.io/techdocs-ref: url:https://github.com/jamesenki/aws-iot-fleetwise-evbatterymonitoring/tree/mkdocs
           spec:
             type: service
             lifecycle: experimental
             owner: ${{parameters.owner}}
+            providesApis:
+            - ${{parameters.api_id}}
+    
+    - id: apiS3CatalogWrite
+      name: "API: S3 Catalog Write"
+      action: aws:s3:catalog:write
+      input:
+        componentId: ${{ parameters.api_id }}
+        entity:
+          apiVersion: backstage.io/v1alpha1
+          kind: API
+          metadata:
+            name: ${{parameters.api_id}}
+            description: API for ${{parameters.description}}
+          spec:
+            type: openapi
+            lifecycle: experimental
+            owner: ${{parameters.owner}}
+            system: ${{ parameters.component_id }}
+            definition: 
+              $text: https://raw.githubusercontent.com/jamesenki/aws-iot-fleetwise-evbatterymonitoring/mkdocs/api.yml
 
     - id: register
       name: Register
