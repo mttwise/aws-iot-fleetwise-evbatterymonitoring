@@ -1,7 +1,7 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: cms-documentation
+  name: RemoteOperations
   annotations:
     github.com/project-slug: jamesenki/aws-iot-fleetwise-evbatterymonitoring
     backstage.io/techdocs-ref: dir:.
@@ -12,18 +12,4 @@ spec:
   providesApis:
     - connected-vehicle-api
 ---
-apiVersion: backstage.io/v1alpha1
-kind: API
-metadata:
-  title: Connected Vehicle API
-  name: connected-vehicle-api
-  description: API For Connected Vehicle
-  tags:
-    - unstable
-spec:
-  type: openapi
-  lifecycle: production
-  owner: aws
-  system: evbatterymonitoring
-  definition:
-    $text: ./api.yml
+
