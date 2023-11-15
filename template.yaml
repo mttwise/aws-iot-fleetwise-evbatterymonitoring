@@ -86,7 +86,7 @@ spec:
             owner: ${{parameters.owner}}
             system: ${{ parameters.component_id }}
             definition: 
-              $text: url:https://raw.githubusercontent.com/jamesenki/aws-iot-fleetwise-evbatterymonitoring/mkdocs/api.yml
+              $text: ./api.yml
 
     - id: register
       name: Register
