@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Valet and Parental Controls APIs
   
-  version: 2.1
+  version: 
 paths: 
   /vehicles/{vehicleId}/telemetry:
     get:
