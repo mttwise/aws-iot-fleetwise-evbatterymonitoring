@@ -1,10 +1,10 @@
 openapi: 3.0.0
 info:
-  title: Extended Vehicle APIs
+  title: Remote Vehicle Management APIS
   
-  version: no version
+  version: 2.1
 paths: 
- /vehicles/{vehicleId}/telemetry:
+  /vehicles/{vehicleId}/telemetry:
     get:
       summary: Get telemetry data
       operationId: getTelemetry
@@ -22,8 +22,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TelemetryData'
-
- /vehicles/{vehicleId}/insights:
+  /vehicles/{vehicleId}/insights:
     get:
       summary: Get insights from S3 bucket
       operationId: getInsights
@@ -41,8 +40,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InsightsData'
-
- /vehicles/{vehicleId}/commands:
+  /vehicles/{vehicleId}/commands:
     post:
       summary: Execute remote commands on the vehicle
       operationId: executeCommand
@@ -67,7 +65,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommandResponse'
- /vehicles/{vehicleId}/remoteClimate:
+  /vehicles/{vehicleId}/remoteClimate:
     post:
       summary: Send remote climate control command
       operationId: sendRemoteClimateCommand
@@ -88,8 +86,7 @@ paths:
       responses:
         '200':
           description: Remote climate control command sent successfully
-
- /vehicles/{vehicleId}/remoteDoor:
+  /vehicles/{vehicleId}/remoteDoor:
     post:
       summary: Send remote door control command
       operationId: sendRemoteDoorCommand
@@ -110,8 +107,7 @@ paths:
       responses:
         '200':
           description: Remote door control command sent successfully
-
- /vehicles/{vehicleId}/remoteEngine:
+  /vehicles/{vehicleId}/remoteEngine:
     post:
       summary: Send remote engine control command
       operationId: sendRemoteEngineCommand
@@ -132,8 +128,7 @@ paths:
       responses:
         '200':
           description: Remote engine control command sent successfully
-
- /vehicles/{vehicleId}/remoteHornAndLights:
+  /vehicles/{vehicleId}/remoteHornAndLights:
     post:
       summary: Send remote horn and lights control command
       operationId: sendRemoteHornAndLightsCommand
@@ -154,8 +149,7 @@ paths:
       responses:
         '200':
           description: Remote horn and lights control command sent successfully
-
- /vehicles/{vehicleId}/remoteOperation:
+  /vehicles/{vehicleId}/remoteOperation:
     post:
       summary: Send remote operation request
       operationId: sendRemoteOperationRequest
@@ -176,8 +170,7 @@ paths:
       responses:
         '200':
           description: Remote operation request sent successfully
-
- /vehicles/{vehicleId}/remoteWindow:
+  /vehicles/{vehicleId}/remoteWindow:
     post:
       summary: Send remote window control command
       operationId: sendRemoteWindowCommand
@@ -198,7 +191,7 @@ paths:
       responses:
         '200':
           description: Remote window control command sent successfully
- /vehicles/{vehicleId}/stolenVehicleMode:
+  /vehicles/{vehicleId}/stolenVehicleMode:
     post:
       summary: Initiate or deactivate stolen vehicle mode
       operationId: changeStolenVehicleMode
@@ -223,8 +216,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StolenModeChangeResponse'
- components:
-    schemas:
+components:
+  schemas:
 
     TelemetryData:
         type: object

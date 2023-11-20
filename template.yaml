@@ -1,13 +1,13 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: sample-service
-  title: Sample Service
-  description: Sample Template that Creates a Catalog Item
+  name: remote-vehicle-management
+  title: Remote Vehicle Management
+  description: Perform remote operations, track vehile attribute state and conduct intelligent data collection
   tags:
-    - sample
+    - example
 spec:
-  owner: sample
+  owner: AWS
   type: service
 
   parameters:
