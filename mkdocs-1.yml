@@ -1,0 +1,4 @@
+nav:
+  - Stolen_Vehicle_ReadMe: StolenVehicleTracking.md
+site_name: Stolen Vehicle Tracking Technical Docs
+theme: readthedocs
