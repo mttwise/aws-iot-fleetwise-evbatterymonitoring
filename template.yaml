@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: geo-speed-fencing
-  title: Valet and Parental Controls
+  title: Digital Key
   description: Put Vehicle in tracking mode to assist police in tracking when stolen
   tags:
     - example
