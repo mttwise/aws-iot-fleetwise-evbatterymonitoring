@@ -1,9 +1,9 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: remote-vehicle-management
-  title: Remote Vehicle Management
-  description: Perform remote operations, track vehile attribute state and conduct intelligent data collection
+  name: stolen-vehicle-tracking
+  title: Stolen Vehicle Tracking
+  description: Put Vehicle in tracking mode to assist police in tracking when stolen
   tags:
     - example
 spec:
