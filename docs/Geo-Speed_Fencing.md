@@ -7,7 +7,7 @@
 <font size="5"> **If you want to jump straight into building and deploying, [click here](#build-and-deploy-the-solution)**</font>
 
 ## Table of Contents
-- [Stolen Vehicle Tacking](#connected-mobility-solution-on-aws)
+- [Valet and Parental Controls](#connected-mobility-solution-on-aws)
   - [Table of Contents](#table-of-contents)
   - [Solution Overview](#solution-overview)
   - [Architecture Diagrams](#architecture-diagrams)
@@ -54,10 +54,10 @@
 
 ## Solution Overview
 
-The Stolen Vehicle Tacking Module provides the code and infastructure need to track vehicle state attributes, issue remote vehicle commands and do intelligent data collection based on collection intervals or vehicle events. 
+The Valet and Parental Controls Module provides the code and infastructure need to track vehicle state attributes, issue remote vehicle commands and do intelligent data collection based on collection intervals or vehicle events. 
 
 For more information and a detailed deployment guide, visit the
-[Stolen Vehicle Tacking Guidance](https://aws.amazon.com/solutions/implementations/connected-mobility-solution-on-aws/)
+[Valet and Parental Controls Guidance](https://aws.amazon.com/solutions/implementations/connected-mobility-solution-on-aws/)
 solution page.
 
 ## Architecture Diagrams
@@ -84,14 +84,14 @@ The same steps can be applied to other modules as well by replacing the URLs and
 3.	Follow the prompts to create a new password and set up multi-factor authentication (MFA).
 4. On Backstage, navigate to the `Create` page available from the `Catalog` menu in the side bar. Select the `CHOOSE` button on the `CMS Vehicle Simulator on AWS` card.
 
-  ![Stolen Vehicle Tacking Choose Card](./images/readme/backstage-choose-vehicle-sim-card.png)
+  ![Valet and Parental Controls Choose Card](./images/readme/backstage-choose-vehicle-sim-card.png)
 5. Fill in the form as required by the Vehicle Simulator template and click the `Next Step` button.
 
 6. Click the `Create` button.
-   ![Stolen Vehicle Tacking Form Confirmation](./images/readme/backstage-vehicle-simulator-form-confirm.png)
-7. Monitor the deployment and ensure that the Stolen Vehicle Tacking module deploys successfully.
+   ![Valet and Parental Controls Form Confirmation](./images/readme/backstage-vehicle-simulator-form-confirm.png)
+7. Monitor the deployment and ensure that the Valet and Parental Controls module deploys successfully.
 
-   ![Stolen Vehicle Tacking Deployment Successful](./images/readme/backstage-vehicle-simulator-deployment-success.png)
+   ![Valet and Parental Controls Deployment Successful](./images/readme/backstage-vehicle-simulator-deployment-success.png)
 
 ## Cost scaling
 
