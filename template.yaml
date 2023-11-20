@@ -61,7 +61,7 @@ spec:
             description: ${{parameters.description}}
             annotations:
               github.com/project-slug: jamesenki/aws-iot-fleetwise-evbatterymonitoring
-              backstage.io/techdocs-ref: url:https://github.com/jamesenki/aws-iot-fleetwise-evbatterymonitoring/tree/mkdocs
+              backstage.io/techdocs-ref: url:https://github.com/jamesenki/aws-iot-fleetwise-evbatterymonitoring/tree/stolen-vehicle-service
           spec:
             type: service
             lifecycle: experimental
