@@ -1,0 +1,5 @@
+nav:
+  - KVS_README: VisteonKvsConnect.md
+ 
+site_name: KVS Connect Technical Docs
+theme: readthedocs
