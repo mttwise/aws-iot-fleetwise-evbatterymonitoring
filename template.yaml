@@ -5,7 +5,6 @@ metadata:
   title: Visteon Kinesis Video Streams Connect
   description: Ingress and display video streams from vehicles
   tags:
-    - example
     - Partner
 spec:
   owner: Visteon
