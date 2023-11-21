@@ -21,7 +21,7 @@ paths:
         '401':
           description: Unauthorized access.
 
-  /vehicle/gnss:
+  /vehicle/report:
     post:
       summary: Post GNSS Information
       description: Endpoint for the vehicle to post its GNSS information every 60 seconds.
