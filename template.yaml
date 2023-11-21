@@ -5,9 +5,9 @@ metadata:
   title: Visteon Kinesis Video Streams Connect
   description: Ingress and display video streams from vehicles
   tags:
-    - Partner
+    - example
 spec:
-  owner: Visteon
+  owner: AWS
   type: service
 
   parameters:
