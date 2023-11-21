@@ -1,0 +1,5 @@
+nav:
+  - Digital_Key_README: digitalkey.md
+  - EV_Battery_Monitoring: EV_Battery.md
+site_name: Digital Key Technical Docs
+theme: readthedocs
