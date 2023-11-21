@@ -1,13 +1,14 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: remote-vehicle-management
-  title: Remote Vehicle Management
-  description: Perform remote operations, track vehile attribute state and conduct intelligent data collection
+  name: visteon-kvs-connect
+  title: Visteon Kinesis Video Streams Connect
+  description: Ingress and display video streams from vehicles
   tags:
     - example
+    - Partner
 spec:
-  owner: AWS
+  owner: Visteon
   type: service
 
   parameters:
@@ -61,7 +62,7 @@ spec:
             description: ${{parameters.description}}
             annotations:
               github.com/project-slug: jamesenki/aws-iot-fleetwise-evbatterymonitoring
-              backstage.io/techdocs-ref: url:https://github.com/jamesenki/aws-iot-fleetwise-evbatterymonitoring/tree/rvm-catalog-item
+              backstage.io/techdocs-ref: url:https://github.com/jamesenki/aws-iot-fleetwise-evbatterymonitoring/tree/visteon-kvs-connect
           spec:
             type: service
             lifecycle: experimental

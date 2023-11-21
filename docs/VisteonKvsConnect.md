@@ -7,7 +7,7 @@
 <font size="5"> **If you want to jump straight into building and deploying, [click here](#build-and-deploy-the-solution)**</font>
 
 ## Table of Contents
-- [Remote Vehicle Management](#connected-mobility-solution-on-aws)
+- [Visteon KVS Connect](#connected-mobility-solution-on-aws)
   - [Table of Contents](#table-of-contents)
   - [Solution Overview](#solution-overview)
   - [Architecture Diagrams](#architecture-diagrams)
@@ -54,10 +54,10 @@
 
 ## Solution Overview
 
-The Remote Vehicle Management Module provides the code and infastructure need to track vehicle state attributes, issue remote vehicle commands and do intelligent data collection based on collection intervals or vehicle events. 
+The Visteon KVS Connect Module provides the code and infastructure need to track vehicle state attributes, issue remote vehicle commands and do intelligent data collection based on collection intervals or vehicle events. 
 
 For more information and a detailed deployment guide, visit the
-[Remote Vehicle Management Guidance](https://aws.amazon.com/solutions/implementations/connected-mobility-solution-on-aws/)
+[Visteon KVS Connect Guidance](https://aws.amazon.com/solutions/implementations/connected-mobility-solution-on-aws/)
 solution page.
 
 ## Architecture Diagrams
@@ -84,14 +84,14 @@ The same steps can be applied to other modules as well by replacing the URLs and
 3.	Follow the prompts to create a new password and set up multi-factor authentication (MFA).
 4. On Backstage, navigate to the `Create` page available from the `Catalog` menu in the side bar. Select the `CHOOSE` button on the `CMS Vehicle Simulator on AWS` card.
 
-  ![Remote Vehicle Management Choose Card](./images/readme/backstage-choose-vehicle-sim-card.png)
+  ![Visteon KVS Connect Choose Card](./images/readme/backstage-choose-vehicle-sim-card.png)
 5. Fill in the form as required by the Vehicle Simulator template and click the `Next Step` button.
 
 6. Click the `Create` button.
-   ![Remote Vehicle Management Form Confirmation](./images/readme/backstage-vehicle-simulator-form-confirm.png)
-7. Monitor the deployment and ensure that the Remote Vehicle Management module deploys successfully.
+   ![Visteon KVS Connect Form Confirmation](./images/readme/backstage-vehicle-simulator-form-confirm.png)
+7. Monitor the deployment and ensure that the Visteon KVS Connect module deploys successfully.
 
-   ![Remote Vehicle Management Deployment Successful](./images/readme/backstage-vehicle-simulator-deployment-success.png)
+   ![Visteon KVS Connect Deployment Successful](./images/readme/backstage-vehicle-simulator-deployment-success.png)
 
 ## Cost scaling
 

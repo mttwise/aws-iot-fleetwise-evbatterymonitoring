@@ -1,106 +1,87 @@
 openapi: 3.0.0
 info:
-  title: Vehicle Control and Monitoring API
+  title: Kinesis Video Streams API
   version: 1.0.0
-  description: API for monitoring and controlling various vehicle attributes.
+  description: API for interacting with Amazon Kinesis Video Streams
+servers:
+  - url: 'https://kinesisvideo.{region}.amazonaws.com'
+    description: Main server for Kinesis Video Streams API
 
 paths:
-  /vehicle/status:
+  /createStream:
     post:
-      summary: Update Vehicle Status
-      description: Endpoint for posting updates to various vehicle attributes.
+      summary: Creates a new Kinesis video stream
+      operationId: createStream
+      tags:
+        - Streams
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/VehicleStatusUpdate'
+              $ref: '#/components/schemas/CreateStreamRequest'
       responses:
         '200':
-          description: Vehicle status updated successfully.
+          description: Stream created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VehicleStatusResponse'
-        '400':
-          description: Invalid request.
+                $ref: '#/components/schemas/CreateStreamResponse'
 
-  /vehicle/commands:
+  /describeStream:
     post:
-      summary: Send Command to Vehicle
-      description: Endpoint for sending commands to change vehicle states.
+      summary: Describes the specified Kinesis video stream
+      operationId: describeStream
+      tags:
+        - Streams
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/VehicleCommand'
+              $ref: '#/components/schemas/DescribeStreamRequest'
       responses:
         '200':
-          description: Command sent successfully.
-        '400':
-          description: Invalid command.
+          description: Stream description retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DescribeStreamResponse'
 
 components:
   schemas:
-    VehicleStatusUpdate:
+    CreateStreamRequest:
       type: object
       properties:
-        ignitionStatus:
+        StreamName:
           type: string
-          enum:
-            - Off
-            - Accessory
-            - On
-            - Start
-        doorLockStatus:
-          type: object
-          properties:
-            frontLeft:
-              type: boolean
-            frontRight:
-              type: boolean
-            rearLeft:
-              type: boolean
-            rearRight:
-              type: boolean
-        trunkLockStatus:
-          type: boolean
-        batteryLevel:
-          type: number
-          format: float
-        fuelLevel:
-          type: number
-          format: float
-        dtcCodes:
-          type: array
-          items:
-            type: string
-        windowPosition:
-          type: object
-          properties:
-            frontLeft:
-              type: number
-            frontRight:
-              type: number
-            rearLeft:
-              type: number
-            rearRight:
-              type: number
-
-    VehicleStatusResponse:
+        DataRetentionInHours:
+          type: integer
+    CreateStreamResponse:
       type: object
       properties:
-        status:
+        StreamARN:
           type: string
-          description: Status message of the update.
 
-    VehicleCommand:
+    DescribeStreamRequest:
       type: object
       properties:
-        commandType:
+        StreamName:
           type: string
-          enum: [lockDoors, unlockDoors, startEngine, stopEngine, etc.]
-        parameters:
-          type: object
+    DescribeStreamResponse:
+      type: object
+      properties:
+        StreamInfo:
+          $ref: '#/components/schemas/StreamInfo'
 
+    StreamInfo:
+      type: object
+      properties:
+        StreamName:
+          type: string
+        StreamARN:
+          type: string
+        MediaType:
+          type: string
+        DataRetentionInHours:
+          type: integer
