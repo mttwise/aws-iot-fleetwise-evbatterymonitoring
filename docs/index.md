@@ -1,4 +1,3 @@
-# Welcome to MkDocs
+# Welcome to Visteon KVS Connect with CMS on AWS 
 
-Use remote vehicle management services to do intelligent data collection, remote command execution and monitoring the state of vehicle attributes
-
+Ingress and display video streams from vehicles and connect to display
