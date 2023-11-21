@@ -1,0 +1,4 @@
+nav:
+  - RemoteVehicleManagement_README: RemoteVehicleManagement.md
+site_name: Remote Vehicle Managmeent Technical Docs 
+theme: readthedocs
