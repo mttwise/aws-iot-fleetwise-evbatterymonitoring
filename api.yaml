@@ -1,92 +1,230 @@
 openapi: 3.0.0
 info:
-  title: Stolen Vehicle Alert API
+  title: AWS IoT FleetWise API
   version: 1.0.0
-  description: API for managing stolen vehicles, including tracking and control.
+  description: API endpoints for managing AWS IoT FleetWise resources.
+servers:
+  - url: 'https://{apiId}.execute-api.{region}.amazonaws.com/{stageName}'
+    description: AWS IoT FleetWise API Server
 
 paths:
-  /vehicle/stolen:
+  /associateVehicleFleet:
     post:
-      summary: Set Stolen Vehicle Mode
-      description: Endpoint to activate Stolen Vehicle Mode. Requires agent authorization.
+      summary: Associates a vehicle with a fleet.
+      operationId: associateVehicleFleet
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StolenVehicleModeRequest'
+              type: object
+              required:
+                - fleetId
+                - vehicleName
+              properties:
+                fleetId:
+                  type: string
+                  pattern: '[a-zA-Z0-9:_-]+'
+                vehicleName:
+                  type: string
+                  pattern: '[a-zA-Z\d\-_:]+'
       responses:
         '200':
-          description: Stolen Vehicle Mode activated successfully.
-        '401':
-          description: Unauthorized access.
+          description: Vehicle successfully associated with fleet.
+        '400':
+          description: Bad request, validation errors.
+        '500':
+          description: Internal server error.
 
-  /vehicle/gnss:
+  /batchCreateVehicle:
     post:
-      summary: Post GNSS Information
-      description: Endpoint for the vehicle to post its GNSS information every 60 seconds.
+      summary: Creates a group or batch of vehicles.
+      operationId: batchCreateVehicle
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GnssInformation'
+              type: object
+              required:
+                - vehicles
+              properties:
+                vehicles:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/CreateVehicleRequestItem'
       responses:
         '200':
-          description: GNSS information received successfully.
+          description: Batch of vehicles successfully created.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vehicles:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CreateVehicleResponseItem'
+        '400':
+          description: Bad request, validation errors.
+        '500':
+          description: Internal server error.
 
-  /vehicle/control:
+  /batchUpdateVehicle:
     post:
-      summary: Send Vehicle Control Commands
-      description: Endpoint to send commands to the stolen vehicle, like slowing down the engine or preventing ignition start.
+      summary: Updates a group or batch of vehicles.
+      operationId: batchUpdateVehicle
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/VehicleControlCommand'
+              type: object
+              required:
+                - vehicles
+              properties:
+                vehicles:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/UpdateVehicleRequestItem'
       responses:
         '200':
-          description: Command sent successfully.
+          description: Batch of vehicles successfully updated.
+        '400':
+          description: Bad request, validation errors.
+        '500':
+          description: Internal server error.
+
+  /createCampaign:
+    post:
+      summary: Creates a campaign for data collection.
+      operationId: createCampaign
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCampaignRequest'
+      responses:
+        '200':
+          description: Campaign successfully created.
+        '400':
+          description: Bad request, validation errors.
+        '500':
+          description: Internal server error.
 
 components:
   schemas:
-    StolenVehicleModeRequest:
+    CreateVehicleRequestItem:
+      type: object
+      required:
+        - vehicleName
+        - decoderManifestArn
+        - modelManifestArn
+      properties:
+        vehicleName:
+          type: string
+          pattern: '[a-zA-Z\d\-_:]+'
+        decoderManifestArn:
+          type: string
+        modelManifestArn:
+          type: string
+        associationBehavior:
+          type: string
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+
+    CreateVehicleResponseItem:
       type: object
       properties:
-        vehicleId:
+        vehicleName:
           type: string
-        agentAuthorizationKey:
+        arn:
+          type: string
+        thingArn:
           type: string
 
-    GnssInformation:
+    UpdateVehicleRequestItem:
+      type: object
+      required:
+        - vehicleName
+      properties:
+        vehicleName:
+          type: string
+          pattern: '[a-zA-Z\d\-_:]+'
+        decoderManifestArn:
+          type: string
+        modelManifestArn:
+          type: string
+        attributeUpdateMode:
+          type: string
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+
+    CreateCampaignRequest:
+      type: object
+      required:
+        - name
+        - collectionScheme
+      properties:
+        name:
+          type: string
+          pattern: '[a-zA-Z\d\-_:]+'
+        collectionScheme:
+          type: object
+          # Detailed structure for CollectionScheme should be added
+        compression:
+          type: string
+          enum: [OFF, SNAPPY]
+        dataDestinationConfigs:
+          type: array
+          items:
+            type: object
+            # Detailed structure for DataDestinationConfig should be added
+        dataExtraDimensions:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+          maxLength: 2048
+        diagnosticsMode:
+          type: string
+          enum: [OFF, SEND_ACTIVE_DTCS]
+        expiryTime:
+          type: number
+        priority:
+          type: integer
+        signalCatalogArn:
+          type: string
+        signalsToCollect:
+          type: array
+          items:
+            type: object
+            # Detailed structure for SignalsToCollect should be added
+        spoolingMode:
+          type: string
+        startTime:
+          type: number
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+        targetArn:
+          type: string
+
+    Tag:
       type: object
       properties:
-        vehicleId:
+        Key:
           type: string
-        latitude:
-          type: number
-          format: float
-        longitude:
-          type: number
-          format: float
-        heading:
-          type: number
-          format: float
-          description: Directional heading in degrees.
-        gpsLockType:
+        Value:
           type: string
-          enum: [none, 2D, 3D]
-        timestamp:
-          type: string
-          format: date-time
-
-    VehicleControlCommand:
-      type: object
-      properties:
-        vehicleId:
-          type: string
-        commandType:
-          type: string
-          enum: [slowDownEngine, preventIgnitionStart]
-

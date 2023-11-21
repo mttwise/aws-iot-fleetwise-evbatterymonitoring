@@ -1,9 +1,9 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: stolen-vehicle-tracking
-  title: Stolen Vehicle Tracking
-  description: Put Vehicle in tracking mode to assist police in tracking when stolen
+  name: fw-live-ev-battery
+  title: Fleetwise Live EV Battery Monitor
+  description: Monitor live vehicles in the field for EV battery health and performance
   tags:
     - example
 spec:
@@ -61,7 +61,7 @@ spec:
             description: ${{parameters.description}}
             annotations:
               github.com/project-slug: jamesenki/aws-iot-fleetwise-evbatterymonitoring
-              backstage.io/techdocs-ref: url:https://github.com/jamesenki/aws-iot-fleetwise-evbatterymonitoring/tree/stolen-vehicle-service
+              backstage.io/techdocs-ref: url:https://github.com/jamesenki/aws-iot-fleetwise-evbatterymonitoring/tree/fw-live-battery
           spec:
             type: service
             lifecycle: experimental
