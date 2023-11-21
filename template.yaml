@@ -3,7 +3,7 @@ kind: Template
 metadata:
   name: visteon-kvs-connect
   title: Visteon Kinesis Video Streams Connect
-  description: Ingress and display video streams from vehicles
+  description: Ingress and display video streams from vehicles and connect to display
   tags:
     - example
 spec:
