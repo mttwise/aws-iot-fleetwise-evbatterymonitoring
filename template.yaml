@@ -3,7 +3,7 @@ kind: Template
 metadata:
   name: digital-key-idemia
   title: Digital Key
-  description: Put Vehicle in tracking mode to assist police in tracking when stolen
+  description: Make and Share Digital Keys for Vehicles with Authorized Users and Devices
   tags:
     - example
 spec:
