@@ -1,9 +1,15 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
+<<<<<<< HEAD
   name: stolen-vehicle-tracking
   title: Fleetwise Live Battery Health Monitor
   description: Put Vehicle in tracking mode to assist police in tracking when stolen
+=======
+  name: fw-live-ev-monitor
+  title: Fleetwise Live Battery Health Monitor
+  description: Monitor the health and behavior or batteries in a fleet in real time
+>>>>>>> ab41529d4145cc9cbbd8f7ffbe2bc8134438179a
   tags:
     - example
 spec:

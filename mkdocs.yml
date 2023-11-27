@@ -1,5 +1,4 @@
 nav:
-  - CMS_README: CMS_README.md
-  - EV_Battery_Monitoring: EV_Battery.md
+  - Fleetwise_Live_EV_Battery_Monitoring: EV_Battery.md
 site_name: CMS Technical Docs
 theme: readthedocs

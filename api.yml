@@ -1,12 +1,7 @@
 openapi: 3.0.0
 info:
-  title: Connected Vehicle APIs
-  description: API interface for interacting with connected vehicles.
-  version: "1.0.0"
-
-servers:
-  - url: 'https://api.connectedvehicles.com'
-
+  title: Extended Vehicle APIs
+  version: no version
 paths:
   /vehicles/{vehicleId}/telemetry:
     get:
@@ -26,7 +21,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TelemetryData'
-
   /vehicles/{vehicleId}/insights:
     get:
       summary: Get insights from S3 bucket
@@ -45,33 +39,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InsightsData'
-
-  /vehicles/{vehicleId}/commands:
-    post:
-      summary: Execute remote commands on the vehicle
-      operationId: executeCommand
-      parameters:
-        - name: vehicleId
-          in: path
-          required: true
-          description: Unique identifier of the vehicle
-          schema:
-            type: string
-      requestBody:
-        description: Command to be executed
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/VehicleCommand'
-      responses:
-        '200':
-          description: Command executed successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CommandResponse'
-
 components:
   schemas:
     TelemetryData:
@@ -91,6 +58,22 @@ components:
           format: double
         engineStatus:
           type: string
+        fuelLevel:
+          type: number
+          format: double
+        batteryVoltage:
+          type: number
+          format: double
+        coolantTemperature:
+          type: number
+          format: double
+        odometer:
+          type: number
+          format: double
+        diagnosticTroubleCodes:
+          type: array
+          items:
+            type: string
 
     InsightsData:
       type: object
@@ -102,21 +85,13 @@ components:
           type: array
           items:
             type: number
-
-    VehicleCommand:
-      type: object
-      properties:
-        commandType:
-          type: string
-          enum: [lock, unlock, startEngine, stopEngine]
-        parameters:
-          type: object
-
-    CommandResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum: [success, failure]
-        message:
-          type: string
+        averageSpeed:
+          type: number
+          format: double
+        harshAccelerationEvents:
+          type: integer
+        harshBrakingEvents:
+          type: integer
+        idleTime:
+          type: number
+          format: double
