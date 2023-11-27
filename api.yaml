@@ -1,0 +1,686 @@
+openapi: 3.0.0
+info:
+  title: Stolen Vehicle Tracking APIs
+  
+  version: 2.1
+paths: 
+  /vehicles/{vehicleId}/telemetry:
+    get:
+      summary: Get telemetry data
+      operationId: getTelemetry
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          description: Unique identifier of the vehicle
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Telemetry data retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelemetryData'
+  /vehicles/{vehicleId}/insights:
+    get:
+      summary: Get insights from S3 bucket
+      operationId: getInsights
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          description: Unique identifier of the vehicle
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Insights data retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsightsData'
+  /vehicles/{vehicleId}/commands:
+    post:
+      summary: Execute remote commands on the vehicle
+      operationId: executeCommand
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          description: Unique identifier of the vehicle
+          schema:
+            type: string
+      requestBody:
+        description: Command to be executed
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleCommand'
+      responses:
+        '200':
+          description: Command executed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommandResponse'
+  /vehicles/{vehicleId}/remoteClimate:
+    post:
+      summary: Send remote climate control command
+      operationId: sendRemoteClimateCommand
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          description: Unique identifier of the vehicle
+          schema:
+            type: string
+      requestBody:
+        description: Remote climate control request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemoteClimateRequest'
+      responses:
+        '200':
+          description: Remote climate control command sent successfully
+  /vehicles/{vehicleId}/remoteDoor:
+    post:
+      summary: Send remote door control command
+      operationId: sendRemoteDoorCommand
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          description: Unique identifier of the vehicle
+          schema:
+            type: string
+      requestBody:
+        description: Remote door control request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemoteDoorRequest'
+      responses:
+        '200':
+          description: Remote door control command sent successfully
+  /vehicles/{vehicleId}/remoteEngine:
+    post:
+      summary: Send remote engine control command
+      operationId: sendRemoteEngineCommand
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          description: Unique identifier of the vehicle
+          schema:
+            type: string
+      requestBody:
+        description: Remote engine control request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemoteEngineRequest'
+      responses:
+        '200':
+          description: Remote engine control command sent successfully
+  /vehicles/{vehicleId}/remoteHornAndLights:
+    post:
+      summary: Send remote horn and lights control command
+      operationId: sendRemoteHornAndLightsCommand
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          description: Unique identifier of the vehicle
+          schema:
+            type: string
+      requestBody:
+        description: Remote horn and lights control request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemoteHornAndLightsRequest'
+      responses:
+        '200':
+          description: Remote horn and lights control command sent successfully
+  /vehicles/{vehicleId}/remoteOperation:
+    post:
+      summary: Send remote operation request
+      operationId: sendRemoteOperationRequest
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          description: Unique identifier of the vehicle
+          schema:
+            type: string
+      requestBody:
+        description: Remote operation request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemoteOperationRequest'
+      responses:
+        '200':
+          description: Remote operation request sent successfully
+  /vehicles/{vehicleId}/remoteWindow:
+    post:
+      summary: Send remote window control command
+      operationId: sendRemoteWindowCommand
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          description: Unique identifier of the vehicle
+          schema:
+            type: string
+      requestBody:
+        description: Remote window control request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemoteWindowRequest'
+      responses:
+        '200':
+          description: Remote window control command sent successfully
+  /vehicles/{vehicleId}/stolenVehicleMode:
+    post:
+      summary: Initiate or deactivate stolen vehicle mode
+      operationId: changeStolenVehicleMode
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          description: Unique identifier of the vehicle
+          schema:
+            type: string
+      requestBody:
+        description: Stolen vehicle mode change request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StolenModeChangeRequest'
+      responses:
+        '200':
+          description: Stolen vehicle mode change processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StolenModeChangeResponse'
+components:
+  schemas:
+
+    TelemetryData:
+        type: object
+        properties:
+          location:
+            type: object
+            properties:
+              latitude:
+                type: number
+                format: double
+              longitude:
+                type: number
+                format: double
+          speed:
+            type: number
+            format: double
+          engineStatus:
+            type: string
+      
+    InsightsData:
+        type: object
+        properties:
+          fuelEfficiency:
+            type: number
+            format: double
+          tirePressure:
+            type: array
+            items:
+              type: number
+
+    VehicleCommand:
+        type: object
+        properties:
+          commandType:
+            type: string
+            enum: [lock, unlock, startEngine, stopEngine]
+          parameters:
+            type: object
+
+    CommandResponse:
+        type: object
+        properties:
+          status:
+            type: string
+            enum: [success, failure]
+          message:
+            type: string
+    InitiateStolenVehicleMode:
+        type: object
+        properties:
+          isStolenModeActive:
+            type: boolean
+    Location:
+        type: object
+        properties:
+          positionLatitude:
+            type: number
+            format: double
+          positionLongitude:
+            type: number
+            format: double
+          estimatedPositionError:
+            type: integer
+            format: int32
+          positionAltitude:
+            type: number
+            format: double
+          gpsFixTypeEnum:
+            $ref: '#/components/schemas/Location.GpsFixType'
+          isGPSFixNotAvailable:
+            type: boolean
+          estimatedAltitudeError:
+            type: integer
+            format: int32
+          positionDirection:
+            type: number
+            format: double
+    Location.GpsFixType:
+        type: string
+        enum:
+          - ID_FIX_NO_POS
+          - ID_FIX_3D
+          - ID_FIX_2D
+          - ID_FIX_ESTIMATED
+    RemoteClimateRequest:
+        type: object
+        properties:
+          command:
+            $ref: '#/components/schemas/RemoteClimateRequest.CommandEnum'
+          interiorTemperature:
+            description: int32 duration = 2; // Duration
+            type: integer
+            format: int32
+          fanSpeed:
+            type: integer
+            format: int32
+          termperatureUOM:
+            $ref: '#/components/schemas/RemoteClimateRequest.TemperatureEnum'
+          targetTemp:
+            type: integer
+            format: int32
+          timeoutAfterTemp:
+            type: integer
+            format: int32
+          preTripTimeout:
+            type: integer
+            format: int32
+    RemoteClimateRequest.CommandEnum:
+        type: string
+        enum:
+          - "ON"
+          - "OFF"
+    RemoteClimateRequest.TemperatureEnum:
+        type: string
+        enum:
+          - Celsius
+          - Fahrenheit
+    RemoteDoorRequest:
+        type: object
+        properties:
+          command:
+            $ref: '#/components/schemas/RemoteDoorRequest.CommandEnum'
+    RemoteDoorRequest.CommandEnum:
+        type: string
+        enum:
+          - LOCK_ALL_DOORS
+          - UNLOCK_DRIVER_DOOR
+          - UNLOCK_ALL_DOORS
+          - OPEN_LIFTGATE
+          - OPEN_HOOD
+          - UNLOCK_TRUNK
+          - CLOSE_LIFTGATE
+    RemoteEngineRequest:
+        type: object
+        properties:
+          command:
+            $ref: '#/components/schemas/RemoteEngineRequest.CommandEnum'
+          duration:
+            type: integer
+            format: int32
+    RemoteEngineRequest.CommandEnum:
+        type: string
+        enum:
+          - START
+          - STOP
+    RemoteHornAndLightsRequest:
+        description: This message represents  RemoteHornAndLights Operation of the vehicle .
+          
+        type: object
+        properties:
+          command:
+            $ref: '#/components/schemas/RemoteHornAndLightsRequest.CommandEnum'
+          duration:
+            type: integer
+            format: int32
+    RemoteHornAndLightsRequest.CommandEnum:
+        type: string
+        enum:
+          - HORN_AND_LIGHTS
+    RemoteOperationRequest:
+        description: This message represents  RemoteOperationRequest of vehicle for Remote Operations.
+         
+        type: object
+        properties:
+          action:
+            $ref: '#/components/schemas/RemoteOperationRequest.ActionEnum'
+          serviceRequestId:
+            type: string
+            format: binary
+        oneOf:
+          - not:
+              anyOf:
+                - required:
+                    - remoteHornAndLightsRequest
+                  properties:
+                    remoteHornAndLightsRequest:
+                      $ref: '#/components/schemas/RemoteHornAndLightsRequest'
+                - required:
+                    - remoteEngineRequest
+                  properties:
+                    remoteEngineRequest:
+                      $ref: '#/components/schemas/RemoteEngineRequest'
+                - required:
+                    - remoteDoorRequest
+                  properties:
+                    remoteDoorRequest:
+                      $ref: '#/components/schemas/RemoteDoorRequest'
+                - required:
+                    - remoteClimateRequest
+                  properties:
+                    remoteClimateRequest:
+                      $ref: '#/components/schemas/RemoteClimateRequest'
+                - required:
+                    - remoteWindowRequest
+                  properties:
+                    remoteWindowRequest:
+                      $ref: '#/components/schemas/RemoteWindowRequest'
+          - required:
+              - remoteHornAndLightsRequest
+            properties:
+              remoteHornAndLightsRequest:
+                $ref: '#/components/schemas/RemoteHornAndLightsRequest'
+          - required:
+              - remoteEngineRequest
+            properties:
+              remoteEngineRequest:
+                $ref: '#/components/schemas/RemoteEngineRequest'
+          - required:
+              - remoteDoorRequest
+            properties:
+              remoteDoorRequest:
+                $ref: '#/components/schemas/RemoteDoorRequest'
+          - required:
+              - remoteClimateRequest
+            properties:
+              remoteClimateRequest:
+                $ref: '#/components/schemas/RemoteClimateRequest'
+          - required:
+              - remoteWindowRequest
+            properties:
+              remoteWindowRequest:
+                $ref: '#/components/schemas/RemoteWindowRequest'
+    RemoteOperationRequest.ActionEnum:
+        type: string
+        enum:
+          - NO_ACTION
+          - SUBSCRIBE
+    RemoteOperationResponse:
+        description: This message represents  Response to Remote Operation of the vehicle .
+        type: object
+        properties:
+          response:
+            $ref: '#/components/schemas/RemoteOperationResponse.ResponseEnum'
+          serviceRequestId:
+            type: string
+            format: binary
+          isTransient:
+            type: boolean
+          failureReasonCode:
+            type: integer
+            format: int32
+    RemoteOperationResponse.ResponseEnum:
+        type: string
+        enum:
+          - SUCCESS
+          - SUCCESS_CONTINUE
+          - SUCCESS_NOCONTINUE
+          - NOT_AUTHORIZED
+          - FAILED
+          - FAILED_IGNITION_ON
+          - FAILED_NOCANACK
+          - FAILED_VEHCONDITION
+          - STARTFAILED_DOORS_NOTLOCKED
+          - STARTFAILED_DOORS_OPEN
+          - STARTFAILED_HOODTRUNK_OPEN
+          - STARTFAILED_ALARM_ACTIVE
+          - STARTFAILED_FUELLOW
+          - STARTFAILED_GASPEDAL
+          - STARTFAILED_PRNDL
+          - STARTFAILED_WINDOWSUNOPEN
+          - STARTFAILED_MAXATTEMPTS_MET
+          - STARTFAILED_VEHPOWERMODE
+          - STARTFAILED_BATTERYLOW
+          - STOPFAILED_ENG_ALREADYOFF
+          - DOORS_FAILED_DOOR_OPEN
+          - FLASHLIGHTS_FAILED_IGNITIONON
+          - FLASHLIGHTS_FAILED_DOOROPEN
+          - FLASHLIGHTS_FAILED_EXPIRED
+          - DOORUNLOCK_RELOCKED_FAILED
+          - DOORUNLOCK_RELOCKED
+          - NOTIFY_CONTINUE
+          - NOTIFY_NOCONTINUE
+          - FAILED_ACTIVE_THEFT_ALARM
+          - NOT_FOUND
+          - REQUESTED
+          - DELIVERED
+          - IN_PROGRESS
+          - COMPLETE
+          - COMPLETE_TIMEOUT
+          - SPEEDLOCKOUT
+    RemoteWindowRequest:
+        type: object
+        properties:
+          command:
+            $ref: '#/components/schemas/RemoteWindowRequest.CommandEnum'
+    RemoteWindowRequest.CommandEnum:
+        type: string
+        enum:
+          - OPEN
+          - PARTIAL
+          - CLOSE
+    StolenModeChangeRequest:
+        type: object
+        properties:
+          stolenModeCommand:
+            $ref: '#/components/schemas/StolenModeChangeRequest.StolenModeCommand'
+          stolenModeDuration:
+            type: integer
+            format: int32
+          locationUpdateInterval:
+            type: integer
+            format: int32
+    StolenModeChangeRequest.StolenModeCommand:
+        type: string
+        enum:
+          - ENTER
+          - EXIT
+    StolenModeChangeResponse:
+        type: object
+        properties:
+          isStolenModeActive:
+            type: boolean
+    StolenVehicleInfoNotification:
+        type: object
+        properties:
+          vehicleInfo:
+            $ref: '#/components/schemas/VehicleInfo'
+          isStolenModeActive:
+            type: boolean
+    TirePressure:
+        type: object
+        properties:
+          flTirePressure:
+            type: number
+            format: float
+          flTireSts:
+            $ref: '#/components/schemas/TirePressure.TireStatusEnum'
+          frTirePressure:
+            type: number
+            format: float
+          frTireSts:
+            $ref: '#/components/schemas/TirePressure.TireStatusEnum'
+          rlTirePressure:
+            type: number
+            format: float
+          rlTireSts:
+            $ref: '#/components/schemas/TirePressure.TireStatusEnum'
+          rrTirePressure:
+            type: number
+            format: float
+          rrTireSts:
+            $ref: '#/components/schemas/TirePressure.TireStatusEnum'
+          rl2TirePressure:
+            type: number
+            format: float
+          rr2TirePressure:
+            type: number
+            format: float
+    TirePressure.TireStatusEnum:
+        type: string
+        enum:
+          - NORMAL
+          - LOW
+          - HIGH
+          - SNA
+          - SIGNIFICANTLY_LOW
+    VehicleInfo:
+        type: object
+        properties:
+          vehicleLocation:
+            $ref: '#/components/schemas/Location'
+          vehicleSpeed:
+            type: number
+            format: float
+          odometer:
+            type: integer
+            format: int32
+          engineStatusEnum:
+            $ref: '#/components/schemas/VehicleInfo.EngineStatusEnum'
+          language:
+            type: string
+          country:
+            type: string
+          vehicleType:
+            $ref: '#/components/schemas/VehicleInfo.VehicleTypeEnum'
+          vin:
+            type: string
+          brand:
+            type: string
+          model:
+            type: string
+          year:
+            type: string
+          recentVehicleLocation1:
+            $ref: '#/components/schemas/Location'
+          recentVehicleLocation2:
+            $ref: '#/components/schemas/Location'
+    VehicleInfo.EngineStatusEnum:
+        type: string
+        enum:
+          - STOP
+          - CRANK
+          - IDLE
+          - RUN
+          - STALL
+          - REQUESTSTART
+    VehicleInfo.VehicleTypeEnum:
+        type: string
+        enum:
+          - PASSENGER_CLASSM1
+          - BUSESANDCOACHES_CLASSM2
+          - BUSESANDCOACHES_CLASSM3
+          - LIGHTCOMMERCIAL_CLASSN1
+          - HEAVYDUTY_CLASSN2
+          - HEAVYDUTY_CLASSN3
+          - MOTORCYCLE_CLASSL1E
+          - MOTORCYCLE_CLASSL2E
+          - MOTORCYCLE_CLASSL3E
+          - MOTORCYCLE_CLASSL4E
+          - MOTORCYCLE_CLASSL5E
+          - MOTORCYCLE_CLASSL6E
+          - MOTORCYCLE_CLASSL7E
+    VehicleStatus:
+        type: object
+        properties:
+          vehicleStatusType:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/VehicleStatus.Type'
+          vehicleStatusParameters:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/VehicleStatus.Status'
+          engineStatusEnum:
+            $ref: '#/components/schemas/VehicleStatus.EngineStatusEnum'
+          fuelLevel:
+            type: integer
+            format: int32
+          odometer:
+            type: integer
+            format: int32
+          interiorTemperature:
+            type: integer
+            format: int32
+          vehicleLocationType:
+            $ref: '#/components/schemas/Location'
+    VehicleStatus.EngineStatusEnum:
+        type: string
+        enum:
+          - STOP
+          - CRANK
+          - IDLE
+          - RUN
+          - STALL
+          - REQUESTSTART
+    VehicleStatus.Status:
+        type: string
+        enum:
+          - CLOSED
+          - CLOSED_UNLOCKED
+          - CLOSED_LOCKED
+          - OPENED
+    VehicleStatus.Type:
+        type: string
+        enum:
+          - FLDOOR
+          - FRDOOR
+          - RLDOOR
+          - RRDOOR
+          - FLWINDOW
+          - FRWINDOW
+          - LLWINDOW
+          - LRWINDOW
+          - HOOD
+          - TRUNK
+          - LIFTGATE

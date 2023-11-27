@@ -1,0 +1,107 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: stolen-vehicle-tracking
+  title: Fleetwise Live Battery Health Monitor
+  description: Put Vehicle in tracking mode to assist police in tracking when stolen
+  tags:
+    - example
+spec:
+  owner: AWS
+  type: service
+
+  parameters:
+    - title: Provide the required information
+      required:
+        - component_id
+        - api_id
+        - owner
+      properties:
+        component_id:
+          title: Name
+          type: string
+          description: Unique name of the component
+          ui:field: EntityNamePicker
+        api_id:
+          title: API Name
+          type: string
+          description: Unique name of the component's API
+          ui:field: EntityNamePicker
+        description:
+          title: Description
+          type: string
+          description: Help others understand what this component is for.
+        owner:
+          title: Owner
+          type: string
+          description: Owner of the component
+          ui:field: OwnerPicker
+          ui:options:
+            allowedKinds:
+  steps:
+
+    - id: runSetupTask
+      name: Run Setup Task
+      action: debug:wait
+      input:
+        minutes: 0
+        seconds: 4
+        milliseconds: 0
+
+    - id: serviceS3CatalogWrite
+      name: "Service: S3 Catalog Write"
+      action: aws:s3:catalog:write
+      input:
+        componentId: ${{ parameters.component_id }}
+        entity:
+          apiVersion: backstage.io/v1alpha1
+          kind: Component
+          metadata:
+            name: ${{parameters.component_id}}
+            description: ${{parameters.description}}
+            annotations:
+              github.com/project-slug: jamesenki/aws-iot-fleetwise-evbatterymonitoring
+              backstage.io/techdocs-ref: url:https://github.com/jamesenki/aws-iot-fleetwise-evbatterymonitoring/tree/mkdocs
+          spec:
+            type: service
+            lifecycle: experimental
+            owner: ${{parameters.owner}}
+            providesApis:
+            - ${{parameters.api_id}}
+    
+    - id: apiS3CatalogWrite
+      name: "API: S3 Catalog Write"
+      action: aws:s3:catalog:write
+      input:
+        componentId: ${{ parameters.api_id }}
+        entity:
+          apiVersion: backstage.io/v1alpha1
+          kind: API
+          metadata:
+            name: ${{parameters.api_id}}
+            description: API for ${{parameters.description}}
+          spec:
+            type: openapi
+            lifecycle: experimental
+            owner: ${{parameters.owner}}
+            system: ${{ parameters.component_id }}
+            definition: 
+              $text: ./api.yaml
+
+    - id: registerService
+      name: "Register: Service Catalog Item"
+      action: catalog:register
+      input:
+        catalogInfoUrl: ${{ steps.serviceS3CatalogWrite.output.s3Url }}
+    - id: registerApi
+      name: "Register: API Catalog Item"
+      action: catalog:register
+      input:
+        catalogInfoUrl: ${{ steps.apiS3CatalogWrite.output.s3Url }}
+
+  output:
+    links:
+      - title: Open in catalog
+        icon: catalog
+        entityRef: ${{ steps.register.output.entityRef }}
+
