@@ -36,7 +36,7 @@ The component makeup of the service delivery platform should look as followss:
 This image shows the basic flow of the Stolen Vehicle tracking application
 ![Stolen Vehicle Diagram](images/readme/stolenvehicle-1.png)
 
-# Executable Requiremnts
+# Executable Requirements
 This project includes executable requirements expressed through cucumber. 
 
 They can be found in the repository 
@@ -60,4 +60,3 @@ here is an example of one of the feature files
 
   These definitions can be generated into tests, assuring that the outcome of development meets the exepected business criteria. 
 
-  Test
