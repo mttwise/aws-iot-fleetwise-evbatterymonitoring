@@ -59,3 +59,5 @@ here is an example of one of the feature files
   Then the vehicle should not start until the command is revoked
 
   These definitions can be generated into tests, assuring that the outcome of development meets the exepected business criteria. 
+
+  Test
