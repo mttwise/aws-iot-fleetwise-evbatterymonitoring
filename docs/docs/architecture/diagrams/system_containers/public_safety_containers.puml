@@ -1,0 +1,19 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Container diagram for the Public Safety Systems
+
+Person(publicSafetyOfficial, "Public Safety Official")
+
+System_Boundary(publicSafetySys, "Public Safety Systems") {
+    Container(publicSafetyApp, "Public Safety System Application", "Web Application", "Used to monitor and coordinate stolen vehicle tracking activity")
+    ContainerDb(publicSafetyDB, "Public Safety Database", "Database", "Stores incident reports and tracking information")
+}
+
+Rel(publicSafetyOfficial, publicSafetyApp, "Uses")
+Rel(publicSafetyApp, publicSafetyDB, "Reads/Writes data")
+
+@enduml
+    

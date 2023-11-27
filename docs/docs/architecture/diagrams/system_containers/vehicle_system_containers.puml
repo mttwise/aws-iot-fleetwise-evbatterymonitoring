@@ -1,0 +1,20 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Container diagram for the Vehicle System
+
+Person(vehicleOwner, "Vehicle Owner")
+
+System_Boundary(ecuSys, "Vehicle System") {
+    Container(ecu, "Electronic Control Unit (ECU)", "Embedded System", "Controls vehicle operations and communicates with the SDP")
+    ContainerDb(gps, "GPS Data Store", "Database", "Stores geolocation data for the vehicle")
+    Container(svl, "Stolen Vehicle Logic", "Embedded Software", "Handles logic when stolen vehicle mode is activated")
+}
+
+Rel(vehicleOwner, ecu, "Interacts with")
+Rel(ecu, gps, "Reads/Writes location data")
+Rel(ecu, svl, "Activates stolen vehicle mode")
+
+@enduml

@@ -1,0 +1,22 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Component diagram for SDP Services (AWS Managed Services)
+
+Container(sdpServices, "SDP Services", "AWS Lambda Functions", "Handles stolen vehicle mode activation and tracking")
+
+Component(stolenVehicleController, "Stolen Vehicle Controller", "AWS Lambda", "Manages vehicle status and interacts with vehicle ECU")
+Component(vehicleTrackingComponent, "Vehicle Tracking Component", "AWS Lambda", "Processes tracking data for stolen vehicles")
+Component(notificationComponent, "Notification Component", "AWS Lambda", "Sends notifications using Amazon SNS")
+ComponentDb(dynamoDB, "DynamoDB", "NoSQL Database", "Stores stolen vehicle reports, events, and tracking data")
+Component(sns, "Amazon SNS", "Notification Service", "Sends alerts and updates to vehicle owners and public safety officials")
+
+Rel(sdpServices, stolenVehicleController, "Triggers")
+Rel(stolenVehicleController, vehicleTrackingComponent, "Invokes")
+Rel(vehicleTrackingComponent, dynamoDB, "Writes to/Reads from")
+Rel(notificationComponent, sns, "Publishes messages to")
+Rel(notificationComponent, dynamoDB, "Reads data from")
+
+@enduml

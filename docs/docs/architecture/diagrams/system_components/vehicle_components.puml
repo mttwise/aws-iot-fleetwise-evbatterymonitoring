@@ -1,0 +1,22 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Component diagram for the Vehicle System (Vehicle Data Store & MQTT)
+
+Container(vehicleSys, "Vehicle System", "Embedded Systems & Communication Services", "Manages vehicle operations and communications")
+
+Component(vehicleController, "Vehicle Controller", "Embedded Software", "Controls vehicle operations")
+Component(gpsTracker, "GPS Tracker", "Embedded System", "Tracks vehicle location")
+Component(mqttClient, "MQTT Client", "Communication Module", "Handles communication with the Service Delivery Platform using MQTT")
+ComponentDb(vehicleDataStore, "Vehicle Data Store", "Data Store", "Stores vehicle status and location data")
+Component(svlLogic, "Stolen Vehicle Logic", "Embedded Software", "Processes logic when stolen vehicle mode is activated")
+
+Rel(vehicleController, gpsTracker, "Gets location data from")
+Rel(vehicleController, svlLogic, "Sends data to")
+Rel(svlLogic, vehicleDataStore, "Writes to/Reads from")
+Rel(mqttClient, vehicleDataStore, "Writes to/Reads from")
+Rel(mqttClient, vehicleController, "Sends commands to/Receives status from")
+
+@enduml

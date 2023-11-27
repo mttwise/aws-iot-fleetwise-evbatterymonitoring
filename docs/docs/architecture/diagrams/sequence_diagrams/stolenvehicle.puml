@@ -1,0 +1,93 @@
+
+@startuml
+
+skinparam backgroundColor #EEEBDC
+skinparam borderThickness 3.5
+
+skinparam sequence {
+rectangleBorderThickness 0.5
+	 titleBorderRoundCorner 15
+ titleBorderThickness 2
+ titleBorderColor red
+	ParticipantBackgroundColor Orange
+	ParticipantBorderColor Orange
+	ParticipantFontName Arial
+	ParticipantFontSize 17
+	ParticipantFontColor black
+	LifeLineBorderColor green
+	LifeLineBackgroundColor #a5e5d0
+	ArrowColor black
+}
+box "Vehicle"
+participant ECU
+end box
+box "Service Delivery Platform"
+participant "Service Delivery Platform Services" as SDP
+participant "External APIS" as API
+end box 
+box "Customer Call Center"
+participant "Agency Web Application" as AWA
+actor "Agent" as Agent 
+end box 
+
+Box "Pblic Safety Systems"
+
+actor "Public Safety Official" as PSO
+participant "Public Safety System Application"	as PSA
+end box
+actor "Vehicle Owner" as VO
+
+[-> VO: Discovers Vehicle has been stolen and makes a report
+
+VO -> Agent: Agent Receives Request with Police Report ID /n 
+Agent -> AWA: Requests Stolen Vehicle Mode on Vehicle
+AWA -> SDP: Posts Call for Stolen Vehicle Mode to SDP
+Agent -> PSO: Contacts the authorities to let them know Stolen Vehicle Tracking is being activiated
+ autonumber
+"SDP" --> "SDP": <b>Stolen Vehicle Mode Event \n<b>
+"SDP" --> "SDP": Assign MessageId \t\t\t\t\t\t\t\t\t
+activate "SDP"
+SDP --> "ECU": \t <b><I> Send StolenModeChangeRequest Message \n\t  
+note left of ECU: For automatic SVL scenario this can be the first message in the sequence
+					
+activate "ECU"
+"ECU" --> "ECU": <b>Process Message  
+
+"ECU" --> "SDP": <b><I>Send StolenModeChangeResponse Message\n\t
+"SDP" --> "SDP": 	<b>Process Message
+opt  Stolen Vehicle Assistance Mode ON
+
+loop Stole Vehicle Report - send location every minute
+autonumber 7.1
+"ECU" --> "SDP": <b><I> Send StolenVehicleReport Message\n\t
+"SDP" --> "SDP": <b> Process Message
+"SDP" --> "SDP": <b> Assign correlationID
+"SDP" --> "ECU": <b> Send  AckMessage
+"ECU" --> "ECU": <b> Process AckMessage
+SDP -> API: Expose Location report for authorized consumers
+loop on demand via api location tracking
+PSO -> PSA: Request Location Tracking Update(s)
+PSA -> API: Request Current Location
+end
+end
+autonumber 8
+"SDP" --> "ECU":<b><I> Send StolenVehicleControlRequest Message \n
+"ECU" --> "ECU":<b> Process Message \n
+"ECU" --> "SDP":<b><I> Send StolenVehicleControlResponse Message \n
+"SDP" --> "SDP": 	<b> Process Message
+
+
+
+alt Vehicle Recovered
+PSO -> Agent: Vehicle Recovery Status reported
+Agent <-]: Agent Learns Vehicle is Recovered or No longer being tracked
+Agent -> AWA: end tracking mode
+AWW -> SDP: Change Tracking State to Off
+SDP -> ECU: End Tracking Mode
+create actor "Owner"
+SDP -> Owner: Vehicle Recovered
+deactivate "ECU"
+deactivate SDP
+
+
+@enduml

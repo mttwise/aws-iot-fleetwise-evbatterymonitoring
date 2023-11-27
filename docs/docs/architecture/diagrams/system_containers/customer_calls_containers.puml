@@ -1,0 +1,18 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Container diagram for the Customer Call Center
+
+Person(agent, "Agent")
+
+System_Boundary(callCenterSys, "Customer Call Center") {
+    Container(webApp, "Agency Web Application", "Web Application", "Allows agents to manage stolen vehicle reports and tracking")
+    ContainerDb(callCenterDB, "Call Center Database", "Relational Database", "Stores agent interactions and vehicle report data")
+}
+
+Rel(agent, webApp, "Uses")
+Rel(webApp, callCenterDB, "Reads/Writes data")
+
+@enduml

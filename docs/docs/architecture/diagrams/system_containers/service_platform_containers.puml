@@ -1,0 +1,19 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Container diagram for the Service Delivery Platform
+
+System_Boundary(sdpSys, "Service Delivery Platform") {
+    Container(sdpServices, "SDP Services", "Application", "Provides stolen vehicle mode activation and tracking services")
+    ContainerDb(sdpDatabase, "SDP Database", "NoSQL Database", "Stores stolen vehicle reports, events, and tracking data and vehicle state")
+    Container(apiGateway, "API Gateway", "API Management", "Manages and routes API requests")
+    Container(extApiIntegration, "External API Integration", "Service", "Integrates with external systems and APIs for additional data")
+}
+
+Rel(sdpServices, sdpDatabase, "Reads/Writes data")
+Rel(apiGateway, sdpServices, "Routes requests to")
+Rel(apiGateway, extApiIntegration, "Routes external API requests to")
+
+@enduml

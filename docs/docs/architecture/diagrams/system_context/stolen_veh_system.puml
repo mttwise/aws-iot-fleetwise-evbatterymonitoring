@@ -1,0 +1,38 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+LAYOUT_WITH_LEGEND()
+
+title System Context diagram for Stolen Vehicle Tracking
+
+Person(vehicleOwner, "Vehicle Owner", "Discovers vehicle has been stolen and makes a report")
+Person(agent, "Agent", "Receives request with Police Report ID and activates stolen vehicle mode")
+Person(publicSafetyOfficial, "Public Safety Official", "Monitors and coordinates stolen vehicle tracking activity")
+
+System_Boundary(vehicleSys, "Vehicle") {
+    System(ecu, "ECU", "Vehicle's electronic control unit")
+}
+
+System_Boundary(sdpSys, "Service Delivery Platform") {
+    System(sdp, "Service Delivery Platform Services", "Handles stolen vehicle mode activation and tracking")
+    System_Ext(externalApis, "External APIs", "Provides access to vehicle location data for authorized consumers")
+}
+
+System_Boundary(cccSys, "Customer Call Center") {
+    System(agencyWebApp, "Agency Web Application", "Used by agents to manage stolen vehicle reports and tracking")
+}
+
+System_Boundary(publicSafetySys, "Public Safety Systems") {
+    System(publicSafetyApp, "Public Safety System Application", "Used by public safety officials to request vehicle location updates")
+}
+
+Rel(vehicleOwner, agent, "Reports stolen vehicle")
+Rel(agent, agencyWebApp, "Requests stolen vehicle mode on vehicle")
+Rel(agencyWebApp, sdp, "Posts call for stolen vehicle mode to SDP")
+Rel(agent, publicSafetyOfficial, "Informs about stolen vehicle tracking activation")
+Rel(ecu, sdp, "Sends and receives stolen vehicle mode messages")
+Rel(sdp, externalApis, "Communicates with external APIs for location reporting")
+Rel(publicSafetyOfficial, publicSafetyApp, "Requests location tracking updates")
+Rel(publicSafetyApp, externalApis, "Requests current location")
+
+@enduml
