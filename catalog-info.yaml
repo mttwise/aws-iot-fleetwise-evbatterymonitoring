@@ -4,7 +4,7 @@ metadata:
   name: RemoteOperations
   annotations:
     github.com/project-slug: jamesenki/aws-iot-fleetwise-evbatterymonitoring
-    backstage.io/techdocs-ref: dir:.
+    backstage.io/techdocs-ref: url:https://github.com/mttwise/aws-iot-fleetwise-evbatterymonitoring/tree/remotevehiclemanagement/docs
 spec:
   type: service
   lifecycle: stage
